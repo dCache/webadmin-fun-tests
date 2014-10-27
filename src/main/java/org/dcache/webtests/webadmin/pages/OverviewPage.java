@@ -2,6 +2,13 @@ package org.dcache.webtests.webadmin.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.empty;
+import static org.junit.Assert.assertThat;
 
 /**
  * PageObject for the overview or home page.
@@ -28,13 +35,17 @@ public class OverviewPage extends DcachePage
 
     public DcachePage clickLogin()
     {
-        _driver.findElement(LOGIN_LINK).click();
+        List<WebElement> foundElements = _driver.findElements(LOGIN_LINK);
+        assertThat("page has no clickable login symbol", foundElements, not(empty()));
+        foundElements.get(0).click();
         return Pages.currentPage(_driver);
     }
 
     public DcachePage clickLogout()
     {
-        _driver.findElement(LOGOUT_LINK).click();
+        List<WebElement> foundElements = _driver.findElements(LOGOUT_LINK);
+        assertThat("page has no clickable logout symbol", foundElements, not(empty()));
+        foundElements.get(0).click();
         return Pages.currentPage(_driver);
     }
 
