@@ -16,6 +16,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -51,7 +54,7 @@ import java.util.Date;
  */
 public class JenkinsResultReporter extends TestResultListener
 {
-    private final File output;
+    private final OutputStream out;
     private final Element testsuites;
     private final Element testsuite;
     private final Document doc;
@@ -65,7 +68,7 @@ public class JenkinsResultReporter extends TestResultListener
     private long failures;
     private long tests;
 
-    public JenkinsResultReporter(String output) throws ParserConfigurationException
+    public JenkinsResultReporter(String filename) throws ParserConfigurationException, IOException
     {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -83,7 +86,17 @@ public class JenkinsResultReporter extends TestResultListener
         }
         testsuites.appendChild(testsuite);
 
-        this.output = new File(output);
+        File output = new File(filename);
+        if (output.exists()) {
+            output.delete();
+        }
+        File parent = output.getParentFile();
+        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+            throw new IOException("Cannot create parent directory: " +
+                    parent.getAbsolutePath());
+        }
+        output.createNewFile();
+        out = new FileOutputStream(output);
     }
 
     @Override
@@ -136,7 +149,8 @@ public class JenkinsResultReporter extends TestResultListener
     @Override
     public void onTestFinish(Description test)
     {
-        currentTestCase.setAttribute("time", String.valueOf(System.currentTimeMillis() - testStartTime));
+        double duration = (System.currentTimeMillis() - testStartTime)/1000.0;
+        currentTestCase.setAttribute("time", String.valueOf(duration));
         currentTestCase = null;
         tests++;
     }
@@ -144,10 +158,12 @@ public class JenkinsResultReporter extends TestResultListener
     @Override
     public void testRunFinished(Result result)
     {
+        double duration = (System.currentTimeMillis() - runStartTime)/1000.0;
+
         testsuites.setAttribute("errors", String.valueOf(errors));
         testsuites.setAttribute("failures", String.valueOf(failures));
         testsuites.setAttribute("tests", String.valueOf(tests));
-        testsuites.setAttribute("time", String.valueOf(System.currentTimeMillis() - runStartTime));
+        testsuites.setAttribute("time", String.valueOf(duration));
 
         testsuite.setAttribute("errors", String.valueOf(errors));
         testsuite.setAttribute("failures", String.valueOf(failures));
@@ -157,9 +173,9 @@ public class JenkinsResultReporter extends TestResultListener
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            transformer.transform(source, new StreamResult(output));
+            transformer.transform(source, new StreamResult(out));
         } catch (TransformerException e) {
-            throw new RuntimeException(e);
+            System.err.println("Failed to write Jenkins XML file: " + e.toString());
         }
     }
 }

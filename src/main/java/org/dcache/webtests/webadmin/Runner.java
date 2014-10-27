@@ -37,13 +37,14 @@ public class Runner
 
     private static boolean isSnapshotSupported;
 
-    public static void main(String[] args) throws ClassNotFoundException, ParserConfigurationException
+    public static void main(String[] args) throws ClassNotFoundException, ParserConfigurationException, IOException
     {
         JUnitCore core = new JUnitCore();
         core.addListener(new PrintStreamReporter(System.out));
 
         String path = System.getProperty("jenkins.path");
         if (path != null) {
+            System.out.println("Writing Jenkins XML report to " + path);
             core.addListener(new JenkinsResultReporter(path));
         }
 
