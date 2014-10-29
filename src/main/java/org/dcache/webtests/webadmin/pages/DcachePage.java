@@ -23,6 +23,7 @@ public class DcachePage
     private final static By NAV_TAPE_TRANSFER_QUEUE = By.cssSelector("div[id=nav] a[href*=tapetransfers]");
     private final static By NAV_ACTIVE_TRANSFERS = By.cssSelector("div[id=nav] a[href*='/transfers']");
     private final static By NAV_BILLING_PLOTS = By.cssSelector("div[id=nav] a[href*=billingplots]");
+    private final static By NAV_POOL_SELECTION_SETUP = By.cssSelector("div[id=nav] a[href*=poolinfo]");
     private final static By NAV_ALARMS = By.cssSelector("div[id=nav] a[href*=alarms]");
 
     private final static By LOGIN_NAME = By.cssSelector("span.userLogin b span");
@@ -80,6 +81,12 @@ public class DcachePage
     public DcachePage navigateToBillingPlots()
     {
         _driver.findElement(NAV_BILLING_PLOTS).click();
+        return Pages.currentPage(_driver);
+    }
+
+    public DcachePage navigateToPoolSelectionSetup()
+    {
+        _driver.findElement(NAV_POOL_SELECTION_SETUP).click();
         return Pages.currentPage(_driver);
     }
 

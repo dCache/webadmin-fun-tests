@@ -63,6 +63,10 @@ public class Pages
             return new BillingPlotsPage(driver);
         }
 
+        if (PoolSelectionSetupPage.isCurrentPage(driver)) {
+            return new PoolSelectionSetupPage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");

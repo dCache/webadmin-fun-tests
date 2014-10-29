@@ -28,6 +28,7 @@ import org.dcache.webtests.webadmin.tests.LoginTests;
 import org.dcache.webtests.webadmin.tests.OverviewTests;
 import org.dcache.webtests.webadmin.tests.PoolQueuePlotsTests;
 import org.dcache.webtests.webadmin.tests.PoolQueuesTests;
+import org.dcache.webtests.webadmin.tests.PoolSelectionSetupTests;
 import org.dcache.webtests.webadmin.tests.PoolUsageTests;
 import org.dcache.webtests.webadmin.tests.PoolgroupsTests;
 import org.dcache.webtests.webadmin.tests.TapeTransferQueueTests;
@@ -58,7 +59,7 @@ public class Runner
                 PoolUsageTests.class, PoolQueuesTests.class,
                 PoolQueuePlotsTests.class, PoolgroupsTests.class,
                 TapeTransferQueueTests.class, ActiveTransfersTests.class,
-                BillingPlotsTests.class,
+                BillingPlotsTests.class, PoolSelectionSetupTests.class,
                 AlarmsTests.class, LoginTests.class);
 
         System.exit(result.wasSuccessful() ? 0 : 1);
