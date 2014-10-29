@@ -2,6 +2,8 @@ package org.dcache.webtests.webadmin.pages;
 
 import org.openqa.selenium.WebDriver;
 
+import static org.junit.Assert.fail;
+
 /**
  * Utility methods.
  */
@@ -29,14 +31,20 @@ public class Pages
             return new CellServicesPage(driver);
         }
 
-        if (AlarmsPage.isCurrentPage(driver)) {
-            return new AlarmsPage(driver);
-        }
-
         if (PoolUsagePage.isCurrentPage(driver)) {
             return new PoolUsagePage(driver);
         }
 
-        throw new IllegalStateException("Unknown page");
+        if (PoolQueuesPage.isCurrentPage(driver)) {
+            return new PoolQueuesPage(driver);
+        }
+
+        if (AlarmsPage.isCurrentPage(driver)) {
+            return new AlarmsPage(driver);
+        }
+
+        fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
+
+        throw new RuntimeException("Unreachable statement.");
     }
 }

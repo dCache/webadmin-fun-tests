@@ -24,6 +24,7 @@ import org.dcache.webtests.webadmin.tests.AlarmsTests;
 import org.dcache.webtests.webadmin.tests.CellServicesTests;
 import org.dcache.webtests.webadmin.tests.LoginTests;
 import org.dcache.webtests.webadmin.tests.OverviewTests;
+import org.dcache.webtests.webadmin.tests.PoolQueuesTests;
 import org.dcache.webtests.webadmin.tests.PoolUsageTests;
 
 /**
@@ -48,8 +49,8 @@ public class Runner
             core.addListener(new JenkinsResultReporter(path));
         }
 
-        Result result = core.run(OverviewTests.class, LoginTests.class,
-                PoolUsageTests.class, CellServicesTests.class, AlarmsTests.class);
+        Result result = core.run(OverviewTests.class, CellServicesTests.class,
+                PoolUsageTests.class, PoolQueuesTests.class, AlarmsTests.class, LoginTests.class);
 
         System.exit(result.wasSuccessful() ? 0 : 1);
     }

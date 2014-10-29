@@ -17,6 +17,7 @@ public class DcachePage
 {
     private final static By NAV_CELL_SERVICES = By.cssSelector("div[id=nav] a[href*=cellinfo]");
     private final static By NAV_POOL_USAGE = By.cssSelector("div[id=nav] a[href*=usageinfo]");
+    private final static By NAV_POOL_QUEUES = By.cssSelector("div[id=nav] a[href*=queueinfo]");
     private final static By NAV_ALARMS = By.cssSelector("div[id=nav] a[href*=alarms]");
 
     private final static By LOGIN_NAME = By.cssSelector("span.userLogin b span");
@@ -38,6 +39,12 @@ public class DcachePage
     public DcachePage navigateToPoolUsage()
     {
         _driver.findElement(NAV_POOL_USAGE).click();
+        return Pages.currentPage(_driver);
+    }
+
+    public DcachePage navigateToPoolQueues()
+    {
+        _driver.findElement(NAV_POOL_QUEUES).click();
         return Pages.currentPage(_driver);
     }
 
