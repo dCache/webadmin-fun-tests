@@ -47,6 +47,10 @@ public class Pages
             return new PoolQueuePlotsPage(driver);
         }
 
+        if (PoolgroupsPage.isCurrentPage(driver)) {
+            return new PoolgroupsPage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");
