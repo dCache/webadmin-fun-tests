@@ -22,6 +22,7 @@ import java.util.logging.LogManager;
 import org.dcache.webtests.drivers.WebDriverFactory;
 import org.dcache.webtests.webadmin.tests.ActiveTransfersTests;
 import org.dcache.webtests.webadmin.tests.AlarmsTests;
+import org.dcache.webtests.webadmin.tests.BillingPlotsTests;
 import org.dcache.webtests.webadmin.tests.CellServicesTests;
 import org.dcache.webtests.webadmin.tests.LoginTests;
 import org.dcache.webtests.webadmin.tests.OverviewTests;
@@ -57,6 +58,7 @@ public class Runner
                 PoolUsageTests.class, PoolQueuesTests.class,
                 PoolQueuePlotsTests.class, PoolgroupsTests.class,
                 TapeTransferQueueTests.class, ActiveTransfersTests.class,
+                BillingPlotsTests.class,
                 AlarmsTests.class, LoginTests.class);
 
         System.exit(result.wasSuccessful() ? 0 : 1);

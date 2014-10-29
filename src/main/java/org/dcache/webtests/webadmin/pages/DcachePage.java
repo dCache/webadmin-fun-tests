@@ -4,9 +4,6 @@ import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -25,6 +22,7 @@ public class DcachePage
     private final static By NAV_POOLGROUPS = By.cssSelector("div[id=nav] a[href*=poolgroups]");
     private final static By NAV_TAPE_TRANSFER_QUEUE = By.cssSelector("div[id=nav] a[href*=tapetransfers]");
     private final static By NAV_ACTIVE_TRANSFERS = By.cssSelector("div[id=nav] a[href*='/transfers']");
+    private final static By NAV_BILLING_PLOTS = By.cssSelector("div[id=nav] a[href*=billingplots]");
     private final static By NAV_ALARMS = By.cssSelector("div[id=nav] a[href*=alarms]");
 
     private final static By LOGIN_NAME = By.cssSelector("span.userLogin b span");
@@ -76,6 +74,12 @@ public class DcachePage
     public DcachePage navigateToActiveTransfers()
     {
         _driver.findElement(NAV_ACTIVE_TRANSFERS).click();
+        return Pages.currentPage(_driver);
+    }
+
+    public DcachePage navigateToBillingPlots()
+    {
+        _driver.findElement(NAV_BILLING_PLOTS).click();
         return Pages.currentPage(_driver);
     }
 
@@ -150,14 +154,17 @@ public class DcachePage
      */
     public void assertLoggedIn()
     {
-        assertTrue(hasLoggedInName());
-        assertThat(getUserActionLabel(), equalTo("logout"));
-        assertThat(getLoggedInName(), equalTo("admin"));
+        assertTrue("Page does not show a login name", hasLoggedInName());
+        assertThat("Page \"user action\" link (under logo, top-right corner)",
+                getUserActionLabel(), equalTo("logout"));
+        assertThat("Page logged-in user (under logo, top-right corner)",
+                getLoggedInName(), equalTo("admin"));
     }
 
     public void assertLoggedOut()
     {
-        assertFalse(hasLoggedInName());
-        assertThat(getUserActionLabel(), equalTo("login"));
+        assertFalse("Page shows a login name", hasLoggedInName());
+        assertThat("Page \"user action\" link (under logo, top-right corner)",
+                getUserActionLabel(), equalTo("login"));
     }
 }

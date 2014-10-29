@@ -59,6 +59,10 @@ public class Pages
             return new ActiveTransfersPage(driver);
         }
 
+        if (BillingPlotsPage.isCurrentPage(driver)) {
+            return new BillingPlotsPage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");
