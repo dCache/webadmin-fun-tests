@@ -27,6 +27,7 @@ public class DcachePage
     private final static By NAV_POOL_ADMIN = By.cssSelector("div[id=nav] a[href*=pooladmin]");
     private final static By NAV_CELL_ADMIN = By.cssSelector("div[id=nav] a[href*=celladmin]");
     private final static By NAV_SPACE_TOKENS = By.xpath("//div[@id='nav']//a[string-length(@href) > 120]");
+    private final static By NAV_INFO_XML = By.cssSelector("div[id=nav] a[href*=infoxml]");
     private final static By NAV_ALARMS = By.cssSelector("div[id=nav] a[href*=alarms]");
 
     private final static By LOGIN_NAME = By.cssSelector("span.userLogin b span");
@@ -108,6 +109,12 @@ public class DcachePage
     public DcachePage navigateToSpaceTokens()
     {
         _driver.findElement(NAV_SPACE_TOKENS).click();
+        return Pages.currentPage(_driver);
+    }
+
+    public DcachePage navigateToInfoXml()
+    {
+        _driver.findElement(NAV_INFO_XML).click();
         return Pages.currentPage(_driver);
     }
 

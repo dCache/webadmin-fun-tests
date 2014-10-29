@@ -79,6 +79,10 @@ public class Pages
             return new SpaceTokensPage(driver);
         }
 
+        if (InfoXmlPage.isCurrentPage(driver)) {
+            return new InfoXmlPage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");
