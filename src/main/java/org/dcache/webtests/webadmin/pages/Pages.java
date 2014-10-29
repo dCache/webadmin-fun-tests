@@ -55,6 +55,10 @@ public class Pages
             return new TapeTransferQueuePage(driver);
         }
 
+        if (ActiveTransfersPage.isCurrentPage(driver)) {
+            return new ActiveTransfersPage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");

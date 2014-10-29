@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.util.logging.LogManager;
 
 import org.dcache.webtests.drivers.WebDriverFactory;
+import org.dcache.webtests.webadmin.tests.ActiveTransfersTests;
 import org.dcache.webtests.webadmin.tests.AlarmsTests;
 import org.dcache.webtests.webadmin.tests.CellServicesTests;
 import org.dcache.webtests.webadmin.tests.LoginTests;
@@ -55,7 +56,7 @@ public class Runner
         Result result = core.run(OverviewTests.class, CellServicesTests.class,
                 PoolUsageTests.class, PoolQueuesTests.class,
                 PoolQueuePlotsTests.class, PoolgroupsTests.class,
-                TapeTransferQueueTests.class,
+                TapeTransferQueueTests.class, ActiveTransfersTests.class,
                 AlarmsTests.class, LoginTests.class);
 
         System.exit(result.wasSuccessful() ? 0 : 1);
