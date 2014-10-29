@@ -25,6 +25,7 @@ public class DcachePage
     private final static By NAV_BILLING_PLOTS = By.cssSelector("div[id=nav] a[href*=billingplots]");
     private final static By NAV_POOL_SELECTION_SETUP = By.cssSelector("div[id=nav] a[href*=poolinfo]");
     private final static By NAV_POOL_ADMIN = By.cssSelector("div[id=nav] a[href*=pooladmin]");
+    private final static By NAV_CELL_ADMIN = By.cssSelector("div[id=nav] a[href*=celladmin]");
     private final static By NAV_ALARMS = By.cssSelector("div[id=nav] a[href*=alarms]");
 
     private final static By LOGIN_NAME = By.cssSelector("span.userLogin b span");
@@ -94,6 +95,12 @@ public class DcachePage
     public DcachePage navigateToPoolAdmin()
     {
         _driver.findElement(NAV_POOL_ADMIN).click();
+        return Pages.currentPage(_driver);
+    }
+
+    public DcachePage navigateToCellAdmin()
+    {
+        _driver.findElement(NAV_CELL_ADMIN).click();
         return Pages.currentPage(_driver);
     }
 

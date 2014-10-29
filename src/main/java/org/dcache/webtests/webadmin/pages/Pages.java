@@ -71,6 +71,10 @@ public class Pages
             return new PoolAdminPage(driver);
         }
 
+        if (CellAdminPage.isCurrentPage(driver)) {
+            return new CellAdminPage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");

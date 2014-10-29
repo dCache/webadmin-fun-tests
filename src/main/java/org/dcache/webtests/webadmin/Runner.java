@@ -23,6 +23,7 @@ import org.dcache.webtests.drivers.WebDriverFactory;
 import org.dcache.webtests.webadmin.tests.ActiveTransfersTests;
 import org.dcache.webtests.webadmin.tests.AlarmsTests;
 import org.dcache.webtests.webadmin.tests.BillingPlotsTests;
+import org.dcache.webtests.webadmin.tests.CellAdminTests;
 import org.dcache.webtests.webadmin.tests.CellServicesTests;
 import org.dcache.webtests.webadmin.tests.LoginTests;
 import org.dcache.webtests.webadmin.tests.OverviewTests;
@@ -61,7 +62,7 @@ public class Runner
                 PoolQueuePlotsTests.class, PoolgroupsTests.class,
                 TapeTransferQueueTests.class, ActiveTransfersTests.class,
                 BillingPlotsTests.class, PoolSelectionSetupTests.class,
-                PoolAdminTests.class,
+                PoolAdminTests.class, CellAdminTests.class,
                 AlarmsTests.class, LoginTests.class);
 
         System.exit(result.wasSuccessful() ? 0 : 1);
