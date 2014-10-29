@@ -4,6 +4,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import org.dcache.webtests.webadmin.pages.CellServicesPage;
+import org.dcache.webtests.webadmin.pages.LoginPage;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -27,6 +28,13 @@ public class CellServicesTests extends AbstractWebDriverTests
         CellServicesPage cellServices = overview.login().navigateToCellServices().assertPageIs(CellServicesPage.class);
 
         cellServices.assertLoggedIn();
+    }
+
+    @Test
+    public void testUserActionNavigatesToLogin()
+    {
+        LoginPage page = overview.navigateToCellServices().clickUserAction().assertPageIs(LoginPage.class);
+        page.assertLoggedOut();
     }
 
     @Ignore("getQuickFindText seems broken")

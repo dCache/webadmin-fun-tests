@@ -3,6 +3,7 @@ package org.dcache.webtests.webadmin.tests;
 import org.junit.Test;
 
 import org.dcache.webtests.webadmin.pages.BillingPlotsPage;
+import org.dcache.webtests.webadmin.pages.LoginPage;
 
 /**
  *
@@ -25,5 +26,12 @@ public class BillingPlotsTests extends AbstractWebDriverTests
                 assertPageIs(BillingPlotsPage.class);
 
         page.assertLoggedIn();
+    }
+
+    @Test
+    public void testUserActionNavigatesToLogin()
+    {
+        LoginPage page = overview.navigateToBillingPlots().clickUserAction().assertPageIs(LoginPage.class);
+        page.assertLoggedOut();
     }
 }

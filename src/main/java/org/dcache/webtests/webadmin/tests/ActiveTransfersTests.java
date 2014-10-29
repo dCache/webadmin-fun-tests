@@ -3,6 +3,7 @@ package org.dcache.webtests.webadmin.tests;
 import org.junit.Test;
 
 import org.dcache.webtests.webadmin.pages.ActiveTransfersPage;
+import org.dcache.webtests.webadmin.pages.LoginPage;
 
 /**
  *
@@ -28,4 +29,10 @@ public class ActiveTransfersTests extends AbstractWebDriverTests
         page.assertLoggedIn();
     }
 
+    @Test
+    public void testUserActionNavigatesToLogin()
+    {
+        LoginPage page = overview.navigateToActiveTransfers().clickUserAction().assertPageIs(LoginPage.class);
+        page.assertLoggedOut();
+    }
 }

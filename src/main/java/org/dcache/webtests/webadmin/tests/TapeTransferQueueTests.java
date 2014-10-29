@@ -2,6 +2,7 @@ package org.dcache.webtests.webadmin.tests;
 
 import org.junit.Test;
 
+import org.dcache.webtests.webadmin.pages.LoginPage;
 import org.dcache.webtests.webadmin.pages.TapeTransferQueuePage;
 
 /**
@@ -25,5 +26,12 @@ public class TapeTransferQueueTests extends AbstractWebDriverTests
                 assertPageIs(TapeTransferQueuePage.class);
 
         page.assertLoggedIn();
+    }
+
+    @Test
+    public void testUserActionNavigatesToLogin()
+    {
+        LoginPage page = overview.navigateToTapeTransferQueue().clickUserAction().assertPageIs(LoginPage.class);
+        page.assertLoggedOut();
     }
 }

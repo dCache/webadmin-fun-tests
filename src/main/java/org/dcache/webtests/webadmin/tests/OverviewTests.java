@@ -6,7 +6,6 @@ import org.dcache.webtests.webadmin.pages.LoginPage;
 import org.dcache.webtests.webadmin.pages.OverviewPage;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 /**
