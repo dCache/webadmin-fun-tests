@@ -67,6 +67,10 @@ public class Pages
             return new PoolSelectionSetupPage(driver);
         }
 
+        if (PoolAdminPage.isCurrentPage(driver)) {
+            return new PoolAdminPage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");
