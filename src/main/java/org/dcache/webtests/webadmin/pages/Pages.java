@@ -75,6 +75,10 @@ public class Pages
             return new CellAdminPage(driver);
         }
 
+        if (SpaceTokensPage.isCurrentPage(driver)) {
+            return new SpaceTokensPage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");

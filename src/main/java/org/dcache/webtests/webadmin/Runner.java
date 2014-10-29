@@ -33,6 +33,7 @@ import org.dcache.webtests.webadmin.tests.PoolQueuesTests;
 import org.dcache.webtests.webadmin.tests.PoolSelectionSetupTests;
 import org.dcache.webtests.webadmin.tests.PoolUsageTests;
 import org.dcache.webtests.webadmin.tests.PoolgroupsTests;
+import org.dcache.webtests.webadmin.tests.SpaceTokensTests;
 import org.dcache.webtests.webadmin.tests.TapeTransferQueueTests;
 
 /**
@@ -63,6 +64,7 @@ public class Runner
                 TapeTransferQueueTests.class, ActiveTransfersTests.class,
                 BillingPlotsTests.class, PoolSelectionSetupTests.class,
                 PoolAdminTests.class, CellAdminTests.class,
+                SpaceTokensTests.class,
                 AlarmsTests.class, LoginTests.class);
 
         System.exit(result.wasSuccessful() ? 0 : 1);
