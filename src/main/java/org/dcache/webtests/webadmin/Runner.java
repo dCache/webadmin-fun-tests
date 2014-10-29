@@ -28,6 +28,7 @@ import org.dcache.webtests.webadmin.tests.PoolQueuePlotsTests;
 import org.dcache.webtests.webadmin.tests.PoolQueuesTests;
 import org.dcache.webtests.webadmin.tests.PoolUsageTests;
 import org.dcache.webtests.webadmin.tests.PoolgroupsTests;
+import org.dcache.webtests.webadmin.tests.TapeTransferQueueTests;
 
 /**
  *  Start JUnit for the web-admin tests.
@@ -54,6 +55,7 @@ public class Runner
         Result result = core.run(OverviewTests.class, CellServicesTests.class,
                 PoolUsageTests.class, PoolQueuesTests.class,
                 PoolQueuePlotsTests.class, PoolgroupsTests.class,
+                TapeTransferQueueTests.class,
                 AlarmsTests.class, LoginTests.class);
 
         System.exit(result.wasSuccessful() ? 0 : 1);

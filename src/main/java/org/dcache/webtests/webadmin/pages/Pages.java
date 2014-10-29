@@ -51,6 +51,10 @@ public class Pages
             return new PoolgroupsPage(driver);
         }
 
+        if (TapeTransferQueuePage.isCurrentPage(driver)) {
+            return new TapeTransferQueuePage(driver);
+        }
+
         fail("Failed to identify page: title='" + driver.getTitle() + "', URL=" + driver.getCurrentUrl());
 
         throw new RuntimeException("Unreachable statement.");
