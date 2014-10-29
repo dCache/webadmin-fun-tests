@@ -22,9 +22,7 @@ public class LoginTests extends AbstractWebDriverTests
 
         OverviewPage afterLogin = page.login();
 
-        assertTrue(afterLogin.hasLoggedInName());
-        assertThat(afterLogin.getUserActionLabel(), equalTo("logout"));
-        assertThat(afterLogin.getLoggedInName(), equalTo("admin"));
+        afterLogin.assertLoggedIn();
     }
 
     @Test
@@ -34,9 +32,7 @@ public class LoginTests extends AbstractWebDriverTests
 
         OverviewPage afterLogin = page.login();
 
-        assertTrue(afterLogin.hasLoggedInName());
-        assertThat(afterLogin.getUserActionLabel(), equalTo("logout"));
-        assertThat(afterLogin.getLoggedInName(), equalTo("admin"));
+        afterLogin.assertLoggedIn();
     }
 
     @Test
@@ -60,8 +56,7 @@ public class LoginTests extends AbstractWebDriverTests
 
         OverviewPage secondLogin = afterLogin.clickLogin().assertPageIs(OverviewPage.class);
 
-        assertTrue(secondLogin.hasLoggedInName());
-        assertThat(secondLogin.getUserActionLabel(), equalTo("logout"));
+        secondLogin.assertLoggedOut();
     }
 
     @Test
@@ -71,8 +66,7 @@ public class LoginTests extends AbstractWebDriverTests
 
         OverviewPage afterLogout = afterLogin.clickUserAction().assertPageIs(OverviewPage.class);
 
-        assertFalse(afterLogout.hasLoggedInName());
-        assertThat(afterLogout.getUserActionLabel(), equalTo("login"));
+        afterLogout.assertLoggedOut();
     }
 
     @Test
@@ -82,7 +76,6 @@ public class LoginTests extends AbstractWebDriverTests
 
         OverviewPage afterLogout = afterLogin.clickLogout().assertPageIs(OverviewPage.class);
 
-        assertFalse(afterLogout.hasLoggedInName());
-        assertThat(afterLogout.getUserActionLabel(), equalTo("login"));
+        afterLogout.assertLoggedOut();
     }
 }

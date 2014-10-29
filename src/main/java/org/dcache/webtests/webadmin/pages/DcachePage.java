@@ -1,11 +1,12 @@
 package org.dcache.webtests.webadmin.pages;
 
+import static org.junit.Assert.*;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 
 /**
  * A generic PageObject that represents the common aspects of any
@@ -103,5 +104,22 @@ public class DcachePage
         loginPage.typeUsername("admin").typePassword("dickerelch").setRememberMe(false);
 
         return loginPage.submitUsernamePasswordLogin().assertPageIs(OverviewPage.class);
+    }
+
+    /**
+     * Handy method to assert that page shows we are logged in as a
+     * specific user.
+     */
+    public void assertLoggedIn()
+    {
+        assertTrue(hasLoggedInName());
+        assertThat(getUserActionLabel(), equalTo("logout"));
+        assertThat(getLoggedInName(), equalTo("admin"));
+    }
+
+    public void assertLoggedOut()
+    {
+        assertFalse(hasLoggedInName());
+        assertThat(getUserActionLabel(), equalTo("login"));
     }
 }

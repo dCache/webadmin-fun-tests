@@ -16,7 +16,17 @@ public class CellServicesTests extends AbstractWebDriverTests
     @Test
     public void testNavigationBeforeLogin() throws InterruptedException
     {
-        overview.navigateToCellServices().assertPageIs(CellServicesPage.class);
+        CellServicesPage cellServices = overview.navigateToCellServices().assertPageIs(CellServicesPage.class);
+
+        cellServices.assertLoggedOut();
+    }
+
+    @Test
+    public void testNavigationAfterLogin() throws InterruptedException
+    {
+        CellServicesPage cellServices = overview.login().navigateToCellServices().assertPageIs(CellServicesPage.class);
+
+        cellServices.assertLoggedIn();
     }
 
     @Ignore("getQuickFindText seems broken")

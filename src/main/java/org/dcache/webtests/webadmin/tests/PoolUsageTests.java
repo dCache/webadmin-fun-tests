@@ -13,13 +13,17 @@ public class PoolUsageTests extends AbstractWebDriverTests
     @Test
     public void testNavigateBeforeLogin()
     {
-        overview.navigateToPoolUsage().assertPageIs(PoolUsagePage.class);
+        PoolUsagePage poolUsage = overview.navigateToPoolUsage().assertPageIs(PoolUsagePage.class);
+
+        poolUsage.assertLoggedOut();
     }
 
     @Test
     public void testNavigateAfterLogin()
     {
         OverviewPage afterLogin = overview.login();
-        afterLogin.navigateToPoolUsage().assertPageIs(PoolUsagePage.class);
+        PoolUsagePage poolUsage = afterLogin.navigateToPoolUsage().assertPageIs(PoolUsagePage.class);
+
+        poolUsage.assertLoggedIn();
     }
 }

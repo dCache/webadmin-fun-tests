@@ -13,12 +13,16 @@ public class AlarmsTests extends AbstractWebDriverTests
     @Test
     public void testNavigateToAlarmsBeforeLoginRedirectToLoginPage()
     {
-        overview.navigateToAlarms().assertPageIs(LoginPage.class);
+        LoginPage login = overview.navigateToAlarms().assertPageIs(LoginPage.class);
+
+        login.assertLoggedOut();
     }
 
     @Test
     public void testNavigateToAlarmsAfterLogin()
     {
-        overview.login().navigateToAlarms().assertPageIs(AlarmsPage.class);
+        AlarmsPage login = overview.login().navigateToAlarms().assertPageIs(AlarmsPage.class);
+
+        login.assertLoggedIn();
     }
 }

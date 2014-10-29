@@ -3,7 +3,6 @@ package org.dcache.webtests.webadmin.tests;
 import org.junit.Rule;
 import org.junit.rules.MethodRule;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import org.dcache.webtests.webadmin.Runner;
 import org.dcache.webtests.webadmin.WebDriverRule;

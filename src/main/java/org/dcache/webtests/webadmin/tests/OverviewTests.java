@@ -17,20 +17,21 @@ public class OverviewTests extends AbstractWebDriverTests
     @Test
     public void testNotLoggedInInitially()
     {
-        assertFalse(overview.hasLoggedInName());
-        assertThat(overview.getUserActionLabel(), equalTo("login"));
+        overview.assertLoggedOut();
     }
 
     @Test
     public void testUserActionNavigatesToLogin()
     {
-        overview.clickUserAction().assertPageIs(LoginPage.class);
+        LoginPage page = overview.clickUserAction().assertPageIs(LoginPage.class);
+        page.assertLoggedOut();
     }
 
     @Test
     public void testLoginViaSymbol()
     {
-        overview.clickLogin().assertPageIs(LoginPage.class);
+        LoginPage page = overview.clickLogin().assertPageIs(LoginPage.class);
+        page.assertLoggedOut();
     }
 
     @Test
@@ -38,8 +39,7 @@ public class OverviewTests extends AbstractWebDriverTests
     {
         OverviewPage afterLogout = overview.clickLogout().assertPageIs(OverviewPage.class);
 
-        assertFalse(afterLogout.hasLoggedInName());
-        assertThat(afterLogout.getUserActionLabel(), equalTo("login"));
+        afterLogout.assertLoggedOut();
         assertThat(afterLogout.getFeedback(), equalTo("Can't log out - You are not logged in!"));
     }
 }
