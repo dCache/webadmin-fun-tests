@@ -59,7 +59,7 @@ public class PrintStreamReporter extends TestResultListener
     {
         _out.println(String.format("\nRan %d tests (%d success, %d ignored, %d failure) in %d seconds.",
                 result.getRunCount(),
-                (result.getRunCount() - result.getFailureCount() - result.getIgnoreCount()),
+                (result.getRunCount() - result.getFailureCount()),
                 result.getIgnoreCount(), result.getFailureCount(),
                 result.getRunTime()/1000));
     }
