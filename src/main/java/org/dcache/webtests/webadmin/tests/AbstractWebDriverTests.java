@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.dcache.webtests.webadmin.Runner;
 import org.dcache.webtests.webadmin.WebDriverRule;
 import org.dcache.webtests.webadmin.pages.OverviewPage;
+import org.dcache.webtests.webadmin.pages.Pages;
 
 /**
  * The common aspect to all test-cases.
@@ -23,6 +24,6 @@ public class AbstractWebDriverTests
     {
         this.driver = driver;
         driver.get(Runner.TARGET_URL);
-        overview = new OverviewPage(driver);
+        overview = Pages.currentPage(driver).assertPageIs(OverviewPage.class);
     }
 }
