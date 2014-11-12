@@ -78,6 +78,11 @@ properties (i.e., adding `-D<name>=<value>`)
     drivers except `htmlunit` require the appropriate web-browser be
     installed on the test system.
 
+*   `tests` This property is a comma-separated list of tests to run.
+    Each item is either a simple class name or a class' canonical
+    name.  Simple class names are taken from the
+    "org.dcache.webtests.webadmin.tests" package.
+
 The java process exits with a return-code to indicate what happened:
 
 *   `0` all tests were either successful or ignored. 

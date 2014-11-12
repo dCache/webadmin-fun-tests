@@ -1,5 +1,6 @@
 package org.dcache.webtests.webadmin;
 
+import com.google.common.base.Splitter;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +18,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.LogManager;
 
 import org.dcache.webtests.drivers.WebDriverFactory;
@@ -46,6 +50,17 @@ public class Runner
     public static final WebDriverFactory WEB_DRIVER_FACTORY = createWebDriverFactory();
     public static final File SNAPSHOT_PATH = getSnapshotPath();
 
+    public static final String TEST_PACKAGE = "org.dcache.webtests.webadmin.tests";
+
+    private static final Class<?>[] DEFAULT_CLASSES_TO_TEST = {
+        OverviewTests.class, CellServicesTests.class, PoolUsageTests.class,
+        PoolQueuesTests.class, PoolQueuePlotsTests.class, PoolgroupsTests.class,
+        TapeTransferQueueTests.class, ActiveTransfersTests.class,
+        BillingPlotsTests.class, PoolSelectionSetupTests.class,
+        PoolAdminTests.class, CellAdminTests.class, InfoXmlTests.class,
+        SpaceTokensTests.class, AlarmsTests.class, LoginTests.class};
+
+
     private static boolean isSnapshotSupported;
 
     public static void main(String[] args) throws ClassNotFoundException, ParserConfigurationException, IOException
@@ -59,15 +74,40 @@ public class Runner
             core.addListener(new JenkinsResultReporter(path));
         }
 
-        Result result = core.run(OverviewTests.class, CellServicesTests.class,
-                PoolUsageTests.class, PoolQueuesTests.class,
-                PoolQueuePlotsTests.class, PoolgroupsTests.class,
-                TapeTransferQueueTests.class, ActiveTransfersTests.class,
-                BillingPlotsTests.class, PoolSelectionSetupTests.class,
-                PoolAdminTests.class, CellAdminTests.class, InfoXmlTests.class,
-                SpaceTokensTests.class, AlarmsTests.class, LoginTests.class);
+        Result result = core.run(getClassesToTest());
 
         System.exit(result.wasSuccessful() ? 0 : 1);
+    }
+
+    private static Class<?>[] getClassesToTest()
+    {
+        String tests = System.getProperty("tests");
+
+        if (tests == null) {
+            return DEFAULT_CLASSES_TO_TEST;
+        }
+
+        ArrayList<Class<?>> classes = new ArrayList<>();
+        for (String name : Splitter.on(",").trimResults().omitEmptyStrings().split(tests)) {
+            if (!name.contains(".")) {
+                name = TEST_PACKAGE + "." + name;
+            }
+            Class<?> testClass;
+
+            try {
+                testClass = Class.forName(name);
+            } catch (ClassNotFoundException e) {
+                throw fail("Unable to find test class " + name);
+            }
+
+            classes.add(testClass);
+        }
+
+        if (classes.isEmpty()) {
+            throw fail("The 'tests' property was specified but no tests were specified.");
+        }
+
+        return classes.toArray(new Class<?>[classes.size()]);
     }
 
     private static WebDriverFactory createWebDriverFactory()
@@ -147,10 +187,8 @@ public class Runner
                 }
             };
         default:
-            System.err.println("Unknown driver '" + type + "', should be one of {firefox,safari,chrome,ie,phantomjs,htmlunit}");
-            System.exit(2);
+            throw fail("Unknown driver '" + type + "', should be one of {firefox,safari,chrome,ie,phantomjs,htmlunit}");
         }
-        return null;
     }
 
     private static File getSnapshotPath()
@@ -161,23 +199,32 @@ public class Runner
         }
 
         if (!isSnapshotSupported) {
-            System.err.println("Current driver does not support snapshots (change with driver system property).");
-            System.exit(2);
+            throw fail("Current driver does not support snapshots (change with driver system property).");
         }
 
         File path = new File(screenshotPath);
 
         if (!path.exists()) {
             if (!path.mkdirs()) {
-                System.err.println("Path " + screenshotPath + " does not exist and could not be created");
-                System.exit(2);
+                throw fail("Path " + screenshotPath + " does not exist and could not be created");
             }
         }
 
         if (!path.isDirectory()) {
-            System.err.println("Path " + screenshotPath + " is not a directory.");
+            throw fail("Path " + screenshotPath + " is not a directory.");
         }
 
         return path;
+    }
+
+
+    // Ugly work-around: we pretend to throw RuntimeException to allow caller
+    // to pretend to throw returned value.  This tells compiler that following
+    // code is never executed.
+    private static RuntimeException fail(String message)
+    {
+        System.err.println(message);
+        System.exit(2);
+        return new RuntimeException("Unreachable code");
     }
 }
