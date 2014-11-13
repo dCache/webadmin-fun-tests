@@ -44,6 +44,12 @@ public class TestResultListener extends RunListener
         onTestFinish(test);
     }
 
+    @Override
+    public void testAssumptionFailure(Failure failure)
+    {
+        onTestAssumptionFailed(failure);
+    }
+
 
     public void onTestStart(Description test)
     {
@@ -54,6 +60,10 @@ public class TestResultListener extends RunListener
     }
 
     public void onTestIgnored(Description test)
+    {
+    }
+
+    public void onTestAssumptionFailed(Failure failure)
     {
     }
 
