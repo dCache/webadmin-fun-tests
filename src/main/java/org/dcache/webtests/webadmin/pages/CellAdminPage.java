@@ -70,8 +70,8 @@ public class CellAdminPage extends DcachePage
 
     public void setDomain(String domain)
     {
-        assumeThat("Cannot run this test with htmlunit",
-                _driver, not(instanceOf(HtmlUnitDriver.class)));
+        assumeTrue("Cannot run this test with htmlunit",
+                !(_driver instanceof HtmlUnitDriver));
 
         Select select = new Select(_driver.findElement(By.name("cellAdminDomain")));
         select.selectByVisibleText(domain);
@@ -81,5 +81,28 @@ public class CellAdminPage extends DcachePage
         // avoid race conditions.
         WebDriverWait wait = new WebDriverWait(_driver, 10);
         wait.until(refreshed(presenceOfElementLocated(By.name("cellAdminCell"))));
+    }
+
+    public void setCell(String cell)
+    {
+        Select select = new Select(_driver.findElement(By.name("cellAdminCell")));
+        select.selectByVisibleText(cell);
+    }
+
+    public void sendCommand(String command)
+    {
+        WebElement textElement = _driver.findElement(By.name("commandText"));
+        textElement.sendKeys(command);
+        _driver.findElement(By.name(":submit")).click();
+    }
+
+    public String getResponseHeading()
+    {
+        return _driver.findElement(By.cssSelector("h2")).getText();
+    }
+
+    public String getResponse()
+    {
+        return _driver.findElement(By.cssSelector("div.output span")).getText();
     }
 }

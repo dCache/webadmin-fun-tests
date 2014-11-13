@@ -1,5 +1,7 @@
 package org.dcache.webtests.webadmin.tests;
 
+import static org.hamcrest.Matchers.*;
+
 import org.junit.Test;
 
 import java.util.List;
@@ -7,8 +9,6 @@ import java.util.List;
 import org.dcache.webtests.webadmin.pages.CellAdminPage;
 import org.dcache.webtests.webadmin.pages.LoginPage;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.*;
 
 /**
@@ -66,4 +66,36 @@ public class CellAdminTests extends AbstractWebDriverTests
         // FIXME: we're embedding knowledge that should be abstracted out.
         assertThat(page.getCells(), hasItem("LoginBroker"));
     }
+
+    @Test
+    public void testPingCommandGivesCorrectResponse()
+    {
+        CellAdminPage page = overview.login().navigateToCellAdmin().
+                assertPageIs(CellAdminPage.class);
+
+        // FIXME: we're embedding knowledge that should be abstracted out.
+        page.setDomain("dCacheDomain");
+        page.setCell("LoginBroker");
+
+        page.sendCommand("xyzzy");
+
+        assertThat(page.getResponse(), equalTo("Nothing happens."));
+    }
+
+    @Test
+    public void testPingCommandCorrectlyLabelled()
+    {
+        CellAdminPage page = overview.login().navigateToCellAdmin().
+                assertPageIs(CellAdminPage.class);
+
+        // FIXME: we're embedding knowledge that should be abstracted out.
+        page.setDomain("dCacheDomain");
+        page.setCell("LoginBroker");
+
+        page.sendCommand("xyzzy");
+
+        assertThat(page.getResponseHeading(),
+                equalTo("Response of LoginBroker@dCacheDomain"));
+    }
+
 }
