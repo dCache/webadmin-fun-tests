@@ -1,12 +1,19 @@
 package org.dcache.webtests.webadmin.pages;
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
+
+import org.dcache.webtests.DcacheVersion;
+import org.dcache.webtests.Util;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.dcache.webtests.Util.httpdDcacheVersion;
 
 /**
  * A generic PageObject that represents the common aspects of any
@@ -114,6 +121,9 @@ public class DcachePage
 
     public DcachePage navigateToInfoXml()
     {
+        assumeTrue("dCache no longer has an INFO XML tab to test",
+                httpdDcacheVersion().isBefore(DcacheVersion.parse("2.12.0")));
+
         _driver.findElement(NAV_INFO_XML).click();
         return Pages.currentPage(_driver);
     }
