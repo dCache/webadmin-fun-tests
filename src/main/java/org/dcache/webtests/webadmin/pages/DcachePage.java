@@ -121,7 +121,7 @@ public class DcachePage
 
     public DcachePage navigateToInfoXml()
     {
-        assumeTrue("dCache no longer has an INFO XML tab to test",
+        assumeTrue("dCache v2.12.0 or later has no INFO XML tab to test",
                 httpdDcacheVersion().isBefore(DcacheVersion.parse("2.12.0")));
 
         _driver.findElement(NAV_INFO_XML).click();
