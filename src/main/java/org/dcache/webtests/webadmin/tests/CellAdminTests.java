@@ -9,7 +9,12 @@ import java.util.List;
 import org.dcache.webtests.webadmin.pages.CellAdminPage;
 import org.dcache.webtests.webadmin.pages.LoginPage;
 
+import static org.dcache.webtests.DcacheVersion.before;
+import static org.dcache.webtests.Util.httpdDcacheVersion;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeThat;
 
 /**
  *
@@ -19,6 +24,8 @@ public class CellAdminTests extends AbstractWebDriverTests
     @Test
     public void testNavigateBeforeLoginRedirectLoginPage()
     {
+        assumeThat("Skipping known-broken behaviour", httpdDcacheVersion(),
+                is(not(before("2.7.0"))));
         LoginPage page = overview.navigateToCellAdmin().assertPageIs(LoginPage.class);
 
         page.assertLoggedOut();
