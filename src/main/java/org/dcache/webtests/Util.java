@@ -11,7 +11,6 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
@@ -20,7 +19,6 @@ import org.dcache.webtests.webadmin.Runner;
 
 import static com.google.common.base.Throwables.propagate;
 import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeNoException;
 
 /**
  * Various utility classes.

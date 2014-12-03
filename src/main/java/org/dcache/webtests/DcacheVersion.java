@@ -1,5 +1,9 @@
 package org.dcache.webtests;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+
 /**
  * Information about the remote dCache version.
  */
@@ -37,7 +41,7 @@ public class DcacheVersion
 
     public String toString()
     {
-        return major + "." + minor + "." + bugfix;
+        return "v" + major + "." + minor + "." + bugfix;
     }
 
     public boolean isBefore(DcacheVersion other)
@@ -49,5 +53,53 @@ public class DcacheVersion
             return this.minor < other.minor;
         }
         return this.bugfix < other.bugfix;
+    }
+
+
+    public static BeforeMatcher before(DcacheVersion version)
+    {
+        return new BeforeMatcher(version);
+    }
+
+    public static BeforeMatcher before(String version)
+    {
+        return new BeforeMatcher(parse(version));
+    }
+
+    public static class BeforeMatcher extends BaseMatcher<DcacheVersion>
+    {
+        private final DcacheVersion comparison;
+
+        BeforeMatcher(DcacheVersion comparison)
+        {
+            this.comparison = comparison;
+        }
+
+        @Override
+        public boolean matches(Object o)
+        {
+            if (!(o instanceof DcacheVersion)) {
+                return false;
+            }
+            DcacheVersion other = (DcacheVersion) o;
+            return other.isBefore(comparison);
+        }
+
+        @Override
+        public void describeMismatch(Object o, Description d)
+        {
+            if (o instanceof DcacheVersion) {
+                d.appendText("Object not a DcacheVersion");
+            } else {
+                DcacheVersion other = (DcacheVersion) o;
+                d.appendText("version " + other + " is not before " + comparison);
+            }
+        }
+
+        @Override
+        public void describeTo(Description d)
+        {
+            d.appendText("before " + comparison);
+        }
     }
 }

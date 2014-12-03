@@ -1,5 +1,6 @@
 package org.dcache.webtests.webadmin.pages;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.Assume.*;
 
@@ -11,8 +12,7 @@ import java.io.IOException;
 import org.dcache.webtests.DcacheVersion;
 import org.dcache.webtests.Util;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.dcache.webtests.DcacheVersion.before;
 import static org.dcache.webtests.Util.httpdDcacheVersion;
 
 /**
@@ -121,8 +121,9 @@ public class DcachePage
 
     public DcachePage navigateToInfoXml()
     {
-        assumeTrue("dCache v2.12.0 or later has no INFO XML tab to test",
-                httpdDcacheVersion().isBefore(DcacheVersion.parse("2.12.0")));
+        // The INFO XML tab is no longer part of webadmin since dCache v2.12.0.
+        assumeThat("INFO XML tab was removed", httpdDcacheVersion(),
+                is(before("2.12.0")));
 
         _driver.findElement(NAV_INFO_XML).click();
         return Pages.currentPage(_driver);
