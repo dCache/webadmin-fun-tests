@@ -14,11 +14,13 @@ import org.junit.runner.notification.RunListener;
 public class TestResultListener extends RunListener
 {
     private boolean _isSuccessful;
+    private boolean _isAssumptionFailed;
 
     @Override
     public void testStarted(Description test)
     {
         _isSuccessful = true;
+        _isAssumptionFailed = false;
         onTestStart(test);
     }
 
@@ -38,7 +40,7 @@ public class TestResultListener extends RunListener
     @Override
     public void testFinished(Description test)
     {
-        if (_isSuccessful) {
+        if (_isSuccessful && !_isAssumptionFailed) {
             onTestSuccess(test);
         }
         onTestFinish(test);
@@ -47,6 +49,7 @@ public class TestResultListener extends RunListener
     @Override
     public void testAssumptionFailure(Failure failure)
     {
+        _isAssumptionFailed = true;
         onTestAssumptionFailed(failure);
     }
 

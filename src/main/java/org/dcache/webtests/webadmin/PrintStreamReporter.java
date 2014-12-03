@@ -53,7 +53,9 @@ public class PrintStreamReporter extends TestResultListener
     public void onTestAssumptionFailed(Failure failure)
     {
         assumptionFailureCount++;
-        _out.println("UNABLE  " + failure.getDescription().getTestClass().getSimpleName() + ": " + failure.getMessage());
+        Description description = failure.getDescription();
+        _out.println("UNABLE  " + description.getTestClass().getSimpleName() +
+                ": " + description.getMethodName() + " - " + failure.getMessage());
     }
 
     @Override

@@ -147,6 +147,14 @@ public class JenkinsResultReporter extends TestResultListener
     }
 
     @Override
+    public void onTestAssumptionFailed(Failure failure)
+    {
+        Element skipped = doc.createElement("skipped");
+        skipped.setAttribute("message", failure.getMessage());
+        currentTestCase.appendChild(skipped);
+    }
+
+    @Override
     public void onTestFinish(Description test)
     {
         double duration = (System.currentTimeMillis() - testStartTime)/1000.0;
