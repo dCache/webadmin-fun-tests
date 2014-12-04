@@ -1,5 +1,8 @@
 package org.dcache.webtests.webadmin;
 
+import com.google.common.base.Strings;
+import org.junit.Ignore;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -46,7 +49,10 @@ public class PrintStreamReporter extends TestResultListener
     @Override
     public void onTestIgnored(Description test)
     {
-        _out.println("IGNORED " + test.getTestClass().getSimpleName() + ": " + test.getMethodName());
+        String message = Strings.nullToEmpty(test.getAnnotation(org.junit.Ignore.class).value());
+        String label = message.isEmpty() ? "" : (" - " + message);
+        _out.println("IGNORED " + test.getTestClass().getSimpleName() + ": " +
+                test.getMethodName() + label);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.dcache.webtests.webadmin;
 
+import org.junit.Ignore;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.annotation.Annotation;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -142,7 +144,12 @@ public class JenkinsResultReporter extends TestResultListener
         Element testcase = doc.createElement("testcase");
         testcase.setAttribute("classname", test.getClassName());
         testcase.setAttribute("name", test.getMethodName());
-        testcase.appendChild(doc.createElement("skipped"));
+        Element skipped = doc.createElement("skipped");
+        Ignore ignore = test.getAnnotation(org.junit.Ignore.class);
+        if (ignore != null) {
+            skipped.setAttribute("message", ignore.value());
+        }
+        testcase.appendChild(skipped);
         testsuite.appendChild(testcase);
     }
 
