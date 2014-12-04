@@ -3,7 +3,7 @@
 
   <groupId>org.dcache</groupId>
   <artifactId>webadmin-testsuite</artifactId>
-  <version>1.5-SNAPSHOT</version>
+  <version>1.5</version>
   <packaging>jar</packaging>
 
   <name>webadmin-testsuite</name>
