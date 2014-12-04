@@ -5,7 +5,6 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
@@ -47,45 +46,74 @@ public class Util
      */
     public static DcacheVersion httpdDcacheVersion()
     {
-        URI webadminEndpoint = URI.create(Runner.TARGET_URL);
+        URI webadmin = URI.create(Runner.TARGET_URL);
 
-        URI infoEndpoint;
+        URI info;
 
         try {
-            infoEndpoint = new URI(webadminEndpoint.getScheme(), null,
-                    webadminEndpoint.getHost(), webadminEndpoint.getPort(),
-                    "/info/domains", null, null);
+            info = new URI(webadmin.getScheme(), null, webadmin.getHost(),
+                    webadmin.getPort(), "/info/domains", null, null);
         } catch (URISyntaxException e) {
             fail("Problem building info endpoint: " + e.getMessage());
             throw new RuntimeException("Unreachable code");
         }
 
-        URLConnection connection;
-        try {
-            connection = infoEndpoint.toURL().openConnection();
-        } catch (IOException e) {
-            fail("Problem contacting info: " + e.getMessage());
-            throw new RuntimeException("Unreachable code");
+        String version = fetchDcacheVersionWithRetries(info);
+
+        return DcacheVersion.parse(version);
+    }
+
+    /**
+     * Try for up to 5 minutes: list of domains updated every 2 minutes
+     * (single round-trip to topo), list of cells (from each domain)
+     * updated every 2 minutes, 1 minute for message round-trip overhead.
+     */
+    private static String fetchDcacheVersionWithRetries(URI endpoint)
+    {
+        int attempt=0;
+        while (true) {
+            String problem;
+            try {
+                String version = fetchDcacheVersion(endpoint);
+                if (version.isEmpty()) {
+                    problem = "httpd service not started yet";
+                } else {
+                    return version;
+                }
+            } catch (IOException e) {
+                problem = "Problem fetching info: " + e.getMessage();
+            }
+
+            if (attempt++ < 300) {
+                try {
+                    Thread.sleep(1_000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    fail("Interrupted while waiting for info service to start");
+                }
+            } else {
+                fail(problem);
+                throw new RuntimeException("Unreachable code");
+            }
         }
+    }
 
+    private static String fetchDcacheVersion(URI endpoint) throws IOException
+    {
+        URLConnection connection = endpoint.toURL().openConnection();
 
-        Document info = null;
         try {
-            info = DocumentBuilderFactory.newInstance().newDocumentBuilder().
-                    parse(connection.getInputStream());
-        } catch (ParserConfigurationException | SAXException | IOException e) {
+            Document info = DocumentBuilderFactory.newInstance().
+                    newDocumentBuilder().parse(connection.getInputStream());
+            return (String) HTTPD_VERSION.evaluate(info);
+        } catch (ParserConfigurationException | SAXException e) {
+            // Should not happen: info should always send well-formed XML.
             fail("Failed to build DOM from info XML: " + e.getMessage());
             throw new RuntimeException("Unreachable code");
-        }
-
-        String version;
-        try {
-            version = (String) HTTPD_VERSION.evaluate(info, XPathConstants.STRING);
         } catch (XPathExpressionException e) {
+            // Should not happen: the XPATH should always evaluate to something.
             fail("Failed to extract dCache version from info XML: " + e.getMessage());
             throw new RuntimeException("Unreachable code");
         }
-
-        return DcacheVersion.parse(version);
     }
 }

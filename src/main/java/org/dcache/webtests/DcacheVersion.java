@@ -2,7 +2,6 @@ package org.dcache.webtests;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 
 /**
  * Information about the remote dCache version.

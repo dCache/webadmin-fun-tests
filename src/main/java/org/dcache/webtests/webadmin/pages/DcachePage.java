@@ -1,19 +1,13 @@
 package org.dcache.webtests.webadmin.pages;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import java.io.IOException;
-
-import org.dcache.webtests.DcacheVersion;
-import org.dcache.webtests.Util;
-
 import static org.dcache.webtests.DcacheVersion.before;
 import static org.dcache.webtests.Util.httpdDcacheVersion;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 
 /**
  * A generic PageObject that represents the common aspects of any
