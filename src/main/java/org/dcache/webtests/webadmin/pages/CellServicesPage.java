@@ -13,8 +13,8 @@ import java.util.List;
 public class CellServicesPage extends DcachePage
 {
     private static final By TABLE_CELLNAME = By.xpath("//table/tbody/tr/td[1]");
-    private static final By QUICK_FIND_TEXT = By.cssSelector("input.quickfind");
-    private static final By QUICK_FIND_CLEAR_BUTTON = By.cssSelector("input.cleanfilters");
+    private static final By QUICK_FIND_TEXT = By.cssSelector("input.quickfind-cells");
+    private static final By QUICK_FIND_CLEAR_BUTTON = By.cssSelector("input.cleanfilters-cells");
 
     public CellServicesPage(WebDriver driver)
     {
