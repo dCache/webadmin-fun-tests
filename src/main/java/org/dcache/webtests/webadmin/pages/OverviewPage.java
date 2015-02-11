@@ -15,9 +15,9 @@ import static org.junit.Assert.assertThat;
  */
 public class OverviewPage extends DcachePage
 {
-    private static final By LOGIN_LINK = By.xpath("//a[img[@class='login']]");
-    private static final By LOGOUT_LINK = By.xpath("//a[img[@class='logout']]");
-    private static final By FEEDBACK_PANEL = By.cssSelector("ul.feedbackPanel");
+    private static final By LOGIN_LINK = By.id("home.login");
+    private static final By LOGOUT_LINK = By.id("home.logout");
+    private static final By FEEDBACK_PANEL = By.id("home.feedback");
 
     public OverviewPage(WebDriver driver)
     {

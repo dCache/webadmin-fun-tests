@@ -16,23 +16,23 @@ import static org.junit.Assume.*;
  */
 public class DcachePage
 {
-    private final static By NAV_CELL_SERVICES = By.cssSelector("div[id=nav] a[href*=cellinfo]");
-    private final static By NAV_POOL_USAGE = By.cssSelector("div[id=nav] a[href*=usageinfo]");
-    private final static By NAV_POOL_QUEUES = By.cssSelector("div[id=nav] a[href*=queueinfo]");
-    private final static By NAV_POOL_QUEUE_PLOTS = By.cssSelector("div[id=nav] a[href*=poolqueueplots]");
-    private final static By NAV_POOLGROUPS = By.cssSelector("div[id=nav] a[href*=poolgroups]");
-    private final static By NAV_TAPE_TRANSFER_QUEUE = By.cssSelector("div[id=nav] a[href*=tapetransfers]");
-    private final static By NAV_ACTIVE_TRANSFERS = By.cssSelector("div[id=nav] a[href*='/transfers']");
-    private final static By NAV_BILLING_PLOTS = By.cssSelector("div[id=nav] a[href*=billingplots]");
-    private final static By NAV_POOL_SELECTION_SETUP = By.cssSelector("div[id=nav] a[href*=poolinfo]");
-    private final static By NAV_POOL_ADMIN = By.cssSelector("div[id=nav] a[href*=pooladmin]");
-    private final static By NAV_CELL_ADMIN = By.cssSelector("div[id=nav] a[href*=celladmin]");
-    private final static By NAV_SPACE_TOKENS = By.xpath("//div[@id='nav']//a[string-length(@href) > 120]");
-    private final static By NAV_INFO_XML = By.cssSelector("div[id=nav] a[href*=infoxml]");
-    private final static By NAV_ALARMS = By.cssSelector("div[id=nav] a[href*=alarms]");
+    private final static By NAV_CELL_SERVICES = By.id("nav.cells");
+    private final static By NAV_POOL_USAGE = By.id("nav.pools");
+    private final static By NAV_POOL_QUEUES = By.id("nav.poolqueues");
+    private final static By NAV_POOL_QUEUE_PLOTS = By.id("nav.poolqueueplots");
+    private final static By NAV_POOLGROUPS = By.id("nav.poolgroup");
+    private final static By NAV_TAPE_TRANSFER_QUEUE = By.id("nav.tapetransfers");
+    private final static By NAV_ACTIVE_TRANSFERS = By.id("nav.activetransfers");
+    private final static By NAV_BILLING_PLOTS = By.id("nav.billing");
+    private final static By NAV_POOL_SELECTION_SETUP = By.id("nav.poolselection");
+    private final static By NAV_POOL_ADMIN = By.id("nav.pooladmin");
+    private final static By NAV_CELL_ADMIN = By.id("nav.celladmin");
+    private final static By NAV_SPACE_TOKENS = By.id("nav.space");
+    private final static By NAV_INFO_XML = By.id("nav.info");
+    private final static By NAV_ALARMS = By.id("nav.alarms");
 
-    private final static By LOGIN_NAME = By.cssSelector("span.userLogin b span");
-    private final static By LOGIN_LINK = By.cssSelector("span.userLogin a");
+    private final static By LOGIN_NAME = By.id("userpannel.username");
+    private final static By LOGIN_LINK = By.id("userpannel.action");
 
     protected final WebDriver _driver;
 

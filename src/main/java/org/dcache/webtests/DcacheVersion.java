@@ -38,6 +38,7 @@ public class DcacheVersion
         this.bugfix = bugfix;
     }
 
+    @Override
     public String toString()
     {
         return "v" + major + "." + minor + "." + bugfix;

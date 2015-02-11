@@ -1,15 +1,9 @@
 package org.dcache.webtests.webadmin.pages;
 
-import static org.hamcrest.Matchers.*;
-
-import org.hamcrest.Matchers;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,6 +19,12 @@ import static org.junit.Assume.*;
  */
 public class CellAdminPage extends DcachePage
 {
+    private static final By SELECT_DOMAIN_LOCATOR = By.id("celladmin.command.domain");
+    private static final By SELECT_CELL_LOCATOR = By.id("celladmin.command.cell");
+    private static final By COMMAND_TEXT_LOCATOR = By.id("celladmin.command.text");
+    private static final By COMMAND_RESPONSE_LOCATOR = By.id("celladmin.command.response");
+    private static final By COMMAND_RECEIVER_LOCATOR = By.id("celladmin.command.receiver");
+    private static final By COMMAND_SUBMIT_LOCATOR = By.id("celladmin.command.submit");
 
     public CellAdminPage(WebDriver driver)
     {
@@ -38,12 +38,12 @@ public class CellAdminPage extends DcachePage
 
     private Select getDomainSelect()
     {
-        return new Select(_driver.findElement(By.name("cellAdminDomain")));
+        return new Select(_driver.findElement(SELECT_DOMAIN_LOCATOR));
     }
 
     private Select getCellSelect()
     {
-        return new Select(_driver.findElement(By.name("cellAdminCell")));
+        return new Select(_driver.findElement(SELECT_CELL_LOCATOR));
     }
 
     public List<String> getDomains()
@@ -73,36 +73,34 @@ public class CellAdminPage extends DcachePage
         assumeTrue("Cannot run this test with htmlunit",
                 !(_driver instanceof HtmlUnitDriver));
 
-        Select select = new Select(_driver.findElement(By.name("cellAdminDomain")));
-        select.selectByVisibleText(domain);
+        getDomainSelect().selectByVisibleText(domain);
 
         // Updating cellAdminDomain triggers an AJAX event that updates the
         // list of available cells.  We must wait for this to complete to
         // avoid race conditions.
         WebDriverWait wait = new WebDriverWait(_driver, 10);
-        wait.until(refreshed(presenceOfElementLocated(By.name("cellAdminCell"))));
+        wait.until(refreshed(presenceOfElementLocated(SELECT_CELL_LOCATOR)));
     }
 
     public void setCell(String cell)
     {
-        Select select = new Select(_driver.findElement(By.name("cellAdminCell")));
-        select.selectByVisibleText(cell);
+        getCellSelect().selectByVisibleText(cell);
     }
 
     public void sendCommand(String command)
     {
-        WebElement textElement = _driver.findElement(By.name("commandText"));
+        WebElement textElement = _driver.findElement(COMMAND_TEXT_LOCATOR);
         textElement.sendKeys(command);
-        _driver.findElement(By.name(":submit")).click();
+        _driver.findElement(COMMAND_SUBMIT_LOCATOR).click();
     }
 
     public String getResponseHeading()
     {
-        return _driver.findElement(By.cssSelector("h2")).getText();
+        return _driver.findElement(COMMAND_RECEIVER_LOCATOR).getText();
     }
 
     public String getResponse()
     {
-        return _driver.findElement(By.cssSelector("div.output span")).getText();
+        return _driver.findElement(COMMAND_RESPONSE_LOCATOR).getText();
     }
 }

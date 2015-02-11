@@ -9,12 +9,12 @@ import org.openqa.selenium.WebElement;
  */
 public class LoginPage extends DcachePage
 {
-    private static final By USERNAME_LOCATOR = By.cssSelector("form input[type=text]");
-    private static final By PASSWORD_LOCATOR = By.cssSelector("form input[type=password]");
-    private static final By REMEMBER_ME_LOCATOR = By.cssSelector("form input[type=checkbox]");
-    private static final By LOGIN_BUTTON_LOCATOR = By.name(":submit");
-    private static final By RESET_BUTTON_LOCATOR = By.cssSelector("form input[type=reset]");
-    private static final By CERTIFICATE_LOGIN_BUTTON_LOCATOR = By.name(":submit");
+    private static final By USERNAME_LOCATOR = By.id("login.username");
+    private static final By PASSWORD_LOCATOR = By.id("login.password");
+    private static final By REMEMBER_ME_LOCATOR = By.id("login.rememberme");
+    private static final By LOGIN_BUTTON_LOCATOR = By.id("login.submit");
+    private static final By RESET_BUTTON_LOCATOR = By.id("login.reset");
+    private static final By CERTIFICATE_LOGIN_BUTTON_LOCATOR = By.id("login.certsignin");
 
     public LoginPage(WebDriver driver)
     {

@@ -13,7 +13,7 @@ import org.junit.runner.notification.Failure;
 import org.openqa.selenium.WebDriverException;
 
 /**
- *
+ * Provide a report of test results to a PrintStream (e.g., stdout).
  */
 public class PrintStreamReporter extends TestResultListener
 {
